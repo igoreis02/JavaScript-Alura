@@ -280,3 +280,161 @@ cliente.conta.sacar(1000);
 
 mostraSaldo(cliente);
 
+
+/**1 - Crie um objeto chamado pessoa que represente informações sobre uma pessoa. O objeto deve ter as seguintes propriedades: nome e notas. Adicione um método chamado calcularMediaNotas ao objeto pessoa. Este método deve calcular a média das notas da pessoa.
+
+Adicione um método chamado classificarDesempenho ao objeto pessoa. Este método deve retornar uma categoria de desempenho com base na média calculada. Utilize as seguintes categorias:
+
+Desempenho excelente: média >= 9
+Bom desempenho: 7.5 <= média entre 7.6 e 8.9
+Desempenho regular: 6 <= média entre 6 e 7.5
+Desempenho insuficiente: média < 6
+Chame o método calcularMediaNotas para calcular a média das notas da pessoa e imprima no console a média calculada.
+
+Chame o método classificarDesempenho e imprima no console a categoria de desempenho da pessoa. */
+
+const pessoa = {
+    nome:'ALBERT IGO',
+    nota : [7,8.5,6,8],
+    calcularMediaNotas:function(){
+        const somar = this.nota.reduce((acomulador,notas) => acomulador + notas);
+        
+        return (somar/this.nota.length).toFixed(2);
+    },
+    classificarDesempenho:function(){
+        const media = this.calcularMediaNotas()
+        if(media >= 9){
+            return 'Desempenho excelente';
+        }else if(media > 7.5 && media < 9){
+            return 'Bom desempenho';
+        }else if(media >= 6 && media <= 7.5){
+            return 'Desempenho regular';
+        }else{
+            return 'Desempenho insuficiente';
+        }
+    }
+}
+
+const media = pessoa.calcularMediaNotas();
+console.log(`${pessoa.nome} tem a média ${media}`);
+
+
+const desempenho = pessoa.classificarDesempenho()
+console.log(`${pessoa.nome} tem o ${desempenho}`);
+
+/**2 - Crie um objeto chamado carro que represente as informações de um veículo. O objeto deve ter as seguintes propriedades:
+
+marca (string): marca do carro.
+modelo (string): modelo do carro.
+ano (number): ano de fabricação do carro.
+cor (string): cor do carro.
+Utilize o loop for...in para percorrer todas as propriedades do objeto carro e imprima no console o nome da propriedade e o seu valor.
+
+Adicione mais propriedades ao objeto carro para representar características adicionais do veículo.
+
+Utilize novamente o loop for...in para percorrer todas as propriedades atualizadas do objeto carro e imprima no console o nome da propriedade e o seu valor. */
+
+const carro = {
+    marca:'Audi',
+    modelo:'A4',
+    ano:2024,
+    cor:'branco',
+    ligado: true,
+    ligar:function(){
+        if(!this.ligado){
+            this.ligado = true;
+            console.log('Carro ligado');
+        }else{
+            console.log('Carro já esta Ligado');
+        }
+    },
+    desligar:function(){
+        if(this.ligado){
+            this.ligado = false;
+            console.log('Carro Desligado');
+        }else{
+            console.log('Carro já está desligado');
+        }
+    },
+    obterDetalhes:function(){
+        const estado = this.ligado ? 'Ligado' : 'Desligado'
+        return `Marca: ${this.marca}
+                Modelo: ${this.modelo}
+                Ano: ${this.ano}
+                Cor: ${this.cor}
+                Estado: ${estado}`
+    },
+    placa:'ABC1235'
+}
+
+
+for( let chave in carro){
+    console.log(`${chave}: ${carro[chave]}`)
+}
+
+carro.ligar();
+carro.desligar();
+carro.desligar();
+carro.ligar();
+
+console.log(carro.obterDetalhes());
+
+/**4 - No objeto carro, adicione uma nova propriedade chamada placa representando a placa do veículo. Defina a propriedade placa como não enumerável, para que ela não seja listada ao percorrer as propriedades do objeto.
+
+Utilize um loop for...in para percorrer as propriedades do objeto carro e imprima no console apenas as propriedades enumeráveis.
+
+Utilize o método Object.keys() para obter um array contendo apenas as chaves enumeráveis do objeto carro e imprima no console esse array.
+
+Tente acessar a propriedade placa diretamente usando carro.placa e imprima no console o resultado obtido. */
+
+Object.defineProperty(carro ,'placa',{enumerable:false})
+
+console.log('Exercicio 4')
+console.log('Propriedade Enumeradas')
+for(let chave in carro){
+    console.log(`${chave}: ${carro[chave]}`);
+}
+
+//chaves enumeraveis do objeto 
+const enumeraveis = Object.keys(carro);
+console.log(`chaves Enumeradas: ${enumeraveis}`);
+
+console.log(carro.placa)
+
+/**5 - Crie um novo objeto chamado carroNovo para representar as informações de um novo carro. O objeto deve ter as seguintes propriedades:
+
+marca (string): marca do novo carro.
+modelo (string): modelo do novo carro.
+ano (number): ano de fabricação do novo carro.
+cor (string): cor do novo carro.
+Utilize o operador de espalhamento (...) para criar um novo objeto chamado carroComNovosDetalhes que herde todas as propriedades do objeto carro e adicione as propriedades do objeto carroNovo.
+
+Imprima no console o objeto carroComNovosDetalhes para verificar as informações do carro com os novos detalhes.
+
+Modifique o valor de uma propriedade no objeto carroComNovosDetalhes e imprima novamente o objeto no console para confirmar as alterações. */
+
+const carroNovo ={
+    marca:'toyota',
+    modelo:'Corola',
+    ano:2010,
+    cor:'Preto',
+}
+
+const carroComNovosDetalhes = {
+    ...carro,...carroNovo   
+}
+
+console.log(carroComNovosDetalhes);
+
+console.log('\nexercicio 5')
+for( let chave in carroComNovosDetalhes){
+    const tipo = typeof carroComNovosDetalhes[chave];
+    if (tipo != 'object' && tipo != 'function'){
+    const estado = carro.ligado ? 'Ligado' : 'Desligado';
+    console.log(`${chave}: ${carroComNovosDetalhes[chave]}`); 
+    }
+}
+
+carroComNovosDetalhes.cor = 'Laranja';
+
+console.log(carroComNovosDetalhes)
